@@ -46,6 +46,7 @@ npm clear:cache
 ```
 ----
 Please consider this starting project as it is. No support is given and improvements are always welcome.
+
 ----
 ## Credits
 Thanks to these repos for inspiring this project:
