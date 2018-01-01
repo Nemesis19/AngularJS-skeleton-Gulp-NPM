@@ -87,8 +87,10 @@ gulp.task('templates', function() {
 gulp.task('modules', ['templates'], function() {
 	return gulp.src(paths.modules.map(module => 'node_modules/' + module))
 		.pipe(errorPlumber('Error compiling Modules'))
+		.pipe(sourcemaps.init())
 		.pipe(concat('vendor.js'))
 		.pipe(gulpif(yargs.argv.deploy, uglify()))
+		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(paths.dist + 'js'))
 		.pipe(gulpif(alerts, notify({message: 'Modules task completed'})));
 });
