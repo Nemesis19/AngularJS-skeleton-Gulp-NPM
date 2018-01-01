@@ -1,0 +1,52 @@
+{
+  "name": "angularjs-skeleton",
+  "version": "1.0.0",
+  "description": "Insert your description",
+  "author": "@nemesis19 - INVENTOPIANO - inventopiano.com",
+  "license": "MIT",
+  "scripts": {
+    "start": "gulp",
+    "deploy": "gulp production --deploy",
+    "clear:cache": "gulp clear:cache"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "bootstrap": "^3.3.7",
+    "browser-sync": "^2.23.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-cache": "^1.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-ng-annotate": "^2.1.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pngquant": "^1.0.12",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-wrap": "^0.13.0",
+    "path": "^0.12.7",
+    "run-sequence": "^2.2.0",
+    "yargs": "^10.0.3"
+  },
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.12",
+    "angular": "^1.6.8",
+    "angular-cookies": "^1.6.8",
+    "angular-i18n": "^1.6.8",
+    "angular-resource": "^1.6.8",
+    "angular-sanitize": "^1.6.8",
+    "angular-ui-bootstrap": "^2.5.6",
+    "angular-ui-notification": "^0.3.6",
+    "ng-focus-if": "^1.0.7"
+  }
+}
