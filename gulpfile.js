@@ -36,7 +36,7 @@ const paths = {
 		scripts: [`${root}/js/**/*.js`, `!${root}/**/*.spec.js`],
 		tests: `${root}/**/*.spec.js`,
 		styles: `${root}/sass/*.scss`,
-		templates: `${root}/**/*.html`,
+		templates: `${root}/js/**/*.html`,
 		modules: [
 			'angular/angular.js',
 			'angular-cookies/angular-cookies.js',
