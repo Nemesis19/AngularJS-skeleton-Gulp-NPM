@@ -167,8 +167,8 @@ gulp.task('static', ['clean'], function() {
 // clean the 'dist' and 'cache' folders
 gulp.task('clean', function() {
 	return del([
-			paths.dist + '/**/*',
-			paths.cache + '/**/*'
+			`${paths.dist}/**/*`,
+			`${paths.cache}/**/*`
 		]);
 });
 
