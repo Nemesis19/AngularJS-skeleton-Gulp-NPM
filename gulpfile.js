@@ -106,7 +106,7 @@ gulp.task('css', function() {
 });
 
 // compile and minify Custom CSS
-gulp.task('scss', ['css'], function() {
+gulp.task('scss', function() {
 	return gulp.src(paths.styles)
 		.pipe(errorPlumber('Error compiling SCSS'))
 		.pipe(sass())
@@ -197,12 +197,12 @@ gulp.task('watch', ['serve'], function() {
 
 // default startup task
 gulp.task('default', function() {
-	runSequence('static', ['images', 'scss', 'app'], ['serve', 'watch']);
+	runSequence('static', ['images', 'css', 'scss', 'app'], ['serve', 'watch']);
 });
 
 // deployment task
 gulp.task('production', function() {
 	console.log('Creating the production version...');
-	runSequence('static', ['images', 'scss', 'app'], ['serve', 'watch']);
+	runSequence('static', ['images', 'css', 'scss', 'app'], ['serve', 'watch']);
 });
 
