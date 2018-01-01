@@ -3,7 +3,6 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
-var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
 var concat = require('gulp-concat');
@@ -125,7 +124,6 @@ gulp.task('app', ['modules'], function() {
 	])
 	.pipe(errorPlumber('Error compiling App'))
 	.pipe(sourcemaps.init())
-	.pipe(babel({presets: ['env']}))
 	.pipe(wrap('(function(angular){\n\'use strict\';\n<%= contents %>})(window.angular);'))
 	.pipe(concat('app.js'))
 	.pipe(ngAnnotate())
