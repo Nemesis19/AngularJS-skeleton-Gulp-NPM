@@ -27,7 +27,7 @@ Please consider using this basic folder structure:
 
 ## Template files
 All the html files included inside the **app** folder will be parsed, minified and included in template.js cache file inside **cache** folder.
-Whenever you need to use the **templateUrl** property inside the **component** or the **directive**, you can just simply use this sintax:
+Whenever you need to use the **templateUrl** property inside a **component** or a **directive**, you can just simply use this syntax:
 ```
 ./file-name.html
 ```
