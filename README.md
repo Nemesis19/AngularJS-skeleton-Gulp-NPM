@@ -32,7 +32,7 @@ Whenever you need to use the **templateUrl** property inside the **component** o
 ./file-name.html
 ```
 This is because in the **dist** folder every template file will be included in the compiled **app.js** with all your application.
-The package **gulp-angular-templatecache** is the package responsible for this feature.
+The package **gulp-angular-templatecache** is the responsible for this feature.
 
 ## Using Gulp
 
