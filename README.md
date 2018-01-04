@@ -25,6 +25,15 @@ Please consider using this basic folder structure:
 ```
 *if you don't create dist and cache folder, they will be created on startup*
 
+## Template files
+All the html files included inside the **app** folder will be parsed, minified and included in template.js cache file inside **cache** folder.
+Whenever you need to use the **templateUrl** property inside the **component** or the **directive**, you can just simply use this sintax:
+```
+./file-name.html
+```
+This is because in the **dist** folder every template file will be included in the compiled **app.js** with all your application.
+The package **gulp-angular-templatecache** is the package responsible for this feature.
+
 ## Using Gulp
 
 Adjust the Gulp file in case you want to adjust the folder structure.
