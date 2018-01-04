@@ -45,8 +45,7 @@ const paths = {
 			'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
 			'@uirouter/angularjs/release/angular-ui-router.js',
 			'angular-resource/angular-resource.js',
-			'angular-ui-notification/dist/angular-ui-notification.js',
-			'ng-focus-if/focusIf.js'
+			'angular-ui-notification/dist/angular-ui-notification.js'
 		],
 		cssModules: [
 			'bootstrap/dist/css/bootstrap.css',
