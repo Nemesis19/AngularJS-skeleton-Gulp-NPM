@@ -111,7 +111,7 @@ gulp.task('scss', function() {
 		.pipe(sass())
 		.pipe(autoprefixer('last 2 version'))
 		.pipe(rename('main.css'))
-		.pipe(cssnano())
+		.pipe(cssnano({ zindex: false }))
 		.pipe(gulp.dest(paths.dist + 'css'))
 		.pipe(gulpif(alerts, notify({message: 'SCSS task completed'})));
 });
