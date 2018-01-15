@@ -1,28 +1,31 @@
 // declarations
-var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var babel = require('gulp-babel');
-var uglify = require('gulp-uglify');
-var htmlmin = require('gulp-htmlmin');
-var concat = require('gulp-concat');
-var cssnano = require('gulp-cssnano');
-var rename = require('gulp-rename');
-var imagemin = require('gulp-imagemin');
-var pngquant = require('gulp-pngquant');
-var plumber = require('gulp-plumber');
-var cache = require('gulp-cache');
-var templateCache = require('gulp-angular-templatecache');
-var ngAnnotate = require('gulp-ng-annotate');
-var notify = require('gulp-notify');
-var path = require('path');
-var sourcemaps = require('gulp-sourcemaps');
-var wrap = require('gulp-wrap');
-var del = require('del');
-var yargs = require('yargs');
-var runSequence = require('run-sequence');
-var browserSync = require('browser-sync').create();
+const gulp = require('gulp');
+const gulpif = require('gulp-if');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
+const uglify = require('gulp-uglify');
+const htmlmin = require('gulp-htmlmin');
+const concat = require('gulp-concat');
+const cssnano = require('gulp-cssnano');
+const rename = require('gulp-rename');
+const imagemin = require('gulp-imagemin');
+const pngquant = require('gulp-pngquant');
+const plumber = require('gulp-plumber');
+const cache = require('gulp-cache');
+const templateCache = require('gulp-angular-templatecache');
+const ngAnnotate = require('gulp-ng-annotate');
+const notify = require('gulp-notify');
+const inject = require('gulp-inject');
+const naturalSort = require('gulp-natural-sort');
+const freeze = require('gulp-freeze');
+const path = require('path');
+const sourcemaps = require('gulp-sourcemaps');
+const wrap = require('gulp-wrap');
+const del = require('del');
+const yargs = require('yargs');
+const runSequence = require('run-sequence');
+const browserSync = require('browser-sync').create();
 
 // variable definitions
 const root = 'app';
@@ -89,6 +92,7 @@ gulp.task('modules', ['templates'], function() {
 		.pipe(sourcemaps.init())
 		.pipe(concat('vendor.js'))
 		.pipe(gulpif(yargs.argv.deploy, uglify()))
+		.pipe(gulpif(yargs.argv.deploy, freeze()))
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(paths.dist + 'js'))
 		.pipe(gulpif(alerts, notify({message: 'Modules task completed'})));
@@ -100,6 +104,7 @@ gulp.task('css', function() {
 		.pipe(errorPlumber('Error compiling Vendor CSS'))
 		.pipe(concat('vendor.css'))
 		.pipe(cssnano())
+		.pipe(gulpif(yargs.argv.deploy, freeze()))
 		.pipe(gulp.dest(paths.dist + 'css'))
 		.pipe(gulpif(alerts, notify({message: 'Vendor CSS task completed'})));
 });
@@ -112,6 +117,7 @@ gulp.task('scss', function() {
 		.pipe(autoprefixer('last 2 version'))
 		.pipe(rename('main.css'))
 		.pipe(cssnano({ zindex: false }))
+		.pipe(gulpif(yargs.argv.deploy, freeze()))
 		.pipe(gulp.dest(paths.dist + 'css'))
 		.pipe(gulpif(alerts, notify({message: 'SCSS task completed'})));
 });
@@ -131,6 +137,7 @@ gulp.task('app', ['modules'], function() {
 	.pipe(concat('app.js'))
 	.pipe(ngAnnotate())
 	.pipe(gulpif(yargs.argv.deploy, uglify()))
+	.pipe(gulpif(yargs.argv.deploy, freeze()))
 	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest(paths.dist + 'js'))
 	.pipe(gulpif(alerts, notify({message: 'App task completed'})));
@@ -160,6 +167,18 @@ gulp.task('images', function() {
 gulp.task('static', ['clean'], function() {
 	return gulp.src(paths.static, {base: root})
 		.pipe(errorPlumber('Error copying Static resources'))
+		.pipe(gulp.dest(paths.dist));
+});
+
+// inject css+js and in deploy with cache bust
+gulp.task('inject', function() {
+	return gulp.src(paths.dist + 'index.html')
+		.pipe(inject(
+			gulp.src([
+				`${paths.dist}/**/*.css`,
+				`${paths.dist}/**/*.js`,
+			])
+			.pipe(naturalSort('desc')), {relative: true}))
 		.pipe(gulp.dest(paths.dist));
 });
 
@@ -196,12 +215,13 @@ gulp.task('watch', ['serve'], function() {
 
 // default startup task
 gulp.task('default', function() {
-	runSequence('static', ['images', 'css', 'scss', 'app'], ['serve', 'watch']);
+	console.log('Creating the development version...');
+	runSequence('static', ['images', 'css', 'scss', 'app'], 'inject', ['serve', 'watch']);
 });
 
 // deployment task
 gulp.task('production', function() {
-	console.log('Creating the production version...');
-	runSequence('static', ['images', 'css', 'scss', 'app'], ['serve', 'watch']);
+	console.log('Creating the production version with minification and cache bust...');
+	runSequence('static', ['images', 'css', 'scss', 'app'], 'inject', ['serve', 'watch']);
 });
 
