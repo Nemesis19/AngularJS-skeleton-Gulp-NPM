@@ -171,7 +171,7 @@ gulp.task('static', ['clean'], function() {
 });
 
 // inject css+js and in deploy with cache bust
-gulp.task('inject', function() {
+gulp.task('inject', ['static'], function() {
 	return gulp.src(paths.dist + 'index.html')
 		.pipe(inject(
 			gulp.src([
@@ -216,12 +216,12 @@ gulp.task('watch', ['serve'], function() {
 // default startup task
 gulp.task('default', function() {
 	console.log('Creating the development version...');
-	runSequence('static', ['images', 'css', 'scss', 'app'], 'inject', ['serve', 'watch']);
+	runSequence(['images', 'css', 'scss', 'app'], 'inject', ['serve', 'watch']);
 });
 
 // deployment task
 gulp.task('production', function() {
 	console.log('Creating the production version with minification and cache bust...');
-	runSequence('static', ['images', 'css', 'scss', 'app'], 'inject', ['serve', 'watch']);
+	runSequence(['images', 'css', 'scss', 'app'], 'inject', ['serve', 'watch']);
 });
 
